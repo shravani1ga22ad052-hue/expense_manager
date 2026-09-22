@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ app_title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Automated Expense Management & Reporting</p>
+          <h1>{{ app_title }}</h1>
+          <p class="lede">
+            Upload an employee expense file or use the built-in demo to show validation,
+            aggregation, rejected expense handling, and monthly reporting in one clean dashboard.
+          </p>
+          <div class="hero-actions">
+            <form class="upload-card" method="post" enctype="multipart/form-data">
+              <input type="hidden" name="action" value="upload_file" />
+              <label for="expense_file">CSV/XLSX expense file</label>
+              <div class="upload-row">
+                <input id="expense_file" name="expense_file" type="file" accept=".csv,.xlsx,.xls" />
+                <button type="submit">Generate Dashboard</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <aside class="hero-panel">
+          <span class="panel-label">Presentation Mode</span>
+          <h2>{{ source_name }}</h2>
+          <p>Clean visuals, live validation, and summary analytics for your demo.</p>
+          <div class="panel-stat">
+            <strong>{{ result.valid_records | length }}</strong>
+            <span>Valid expenses</span>
+          </div>
+          <div class="panel-stat">
+            <strong>{{ result.rejected_records | length }}</strong>
+            <span>Rejected or flagged</span>
+          </div>
+        </aside>
+      </header>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <section class="message-stack">
+            {% for category, message in messages %}
+              <div class="message {{ category }}">{{ message }}</div>
+            {% endfor %}
+          </section>
+        {% endif %}
+      {% endwith %}
+
+      <main class="dashboard">
+        <section class="content-grid upload-grid">
+          <article class="panel">
+            <div class="section-heading">
+              <h3>Upload Files for Testing</h3>
+              <p>Use these built-in files to exercise the dashboard quickly.</p>
+            </div>
+            <div class="sample-links">
+              {% for sample in sample_files %}
+                <a href="{{ url_for('static', filename=sample.file) }}" download>{{ sample.label }}</a>
+              {% endfor %}
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading">
+              <h3>Add Expense Manually</h3>
+              <p>Type a single expense record and add it to the demo dashboard.</p>
+            </div>
+            <form class="manual-form" method="post">
+              <input type="hidden" name="action" value="manual_add" />
+              <div class="form-grid">
+                <label>Employee ID<input name="manual_employee_id" placeholder="E101" /></label>
+                <label>Date<input name="manual_date" type="date" value="2026-09-21" /></label>
+                <label>Category<input name="manual_category" placeholder="Travel" /></label>
+                <label>Amount<input name="manual_amount" type="number" step="0.01" placeholder="125.00" /></label>
+                <label class="full-width">Description<input name="manual_description" placeholder="Client meeting lunch" /></label>
+                <label>Approval Status
+                  <select name="manual_approval_status">
+                    <option value="approved">Approved</option>
+                    <option value="submitted">Submitted</option>
+                    <option value="rejected">Rejected</option>
+                  </select>
+                </label>
+              </div>
+              <div class="form-actions">
+                <button type="submit">Add Manual Expense</button>
+                <button type="submit" name="action" value="manual_clear" class="ghost-button">Clear Manual Entries</button>
+              </div>
+            </form>
+            <p class="manual-count">Current manual entries: {{ manual_count }}</p>
+          </article>
+        </section>
+
+        <section class="kpi-grid">
+          <article class="kpi-card accent">
+            <span>Total Spend</span>
+            <strong>{{ format_currency(total_spend) }}</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Largest Expense</span>
+            <strong>{{ format_currency(largest_expense) }}</strong>
+          </article>
+          <article class="kpi-card">
+            <span>Top Employee</span>
+            <strong>{{ top_employee[0] }}</strong>
+            <small>{{ format_currency(top_employee[1]) }}</small>
+          </article>
+          <article class="kpi-card">
+            <span>Monthly Total Records</span>
+            <strong>{{ result.monthly_totals | length }}</strong>
+          </article>
+        </section>
+
+        <section class="content-grid">
+          <article class="panel card-wide">
+            <div class="section-heading">
+              <h3>Category Totals</h3>
+              <p>Largest spend categories shown as a visual summary.</p>
+            </div>
+            <div class="bar-list">
+              {% for row in category_rows %}
+                <div class="bar-item">
+                  <div class="bar-meta">
+                    <span>{{ row.name }}</span>
+                    <strong>{{ format_currency(row.amount) }}</strong>
+                  </div>
+                  <div class="bar-track">
+                    <span style="width: {{ row.percentage if row.percentage > 5 else 5 }}%"></span>
+                  </div>
+                </div>
+              {% endfor %}
+              {% if not category_rows %}
+                <p>No category totals available.</p>
+              {% endif %}
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading">
+              <h3>Monthly Totals</h3>
+              <p>High-level spending by reporting month.</p>
+            </div>
+            <div class="table-shell">
+              <table>
+                <thead>
+                  <tr><th>Month</th><th>Amount</th></tr>
+                </thead>
+                <tbody>
+                  {% for row in monthly_rows %}
+                    <tr>
+                      <td>{{ row.month }}</td>
+                      <td>{{ format_currency(row.amount) }}</td>
+                    </tr>
+                  {% endfor %}
+                  {% if not monthly_rows %}
+                    <tr><td colspan="2">No monthly totals available.</td></tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+
+        <section class="content-grid secondary-grid">
+          <article class="panel">
+            <div class="section-heading">
+              <h3>Rejected & Flagged Items</h3>
+              <p>Review exceptions to demonstrate validation.</p>
+            </div>
+            <div class="issue-list">
+              {% for row in issue_rows %}
+                <div class="issue-row">
+                  <strong>Row {{ row.row }}</strong>
+                  <span>{{ row.employee_id }}</span>
+                  <p>{{ row.reason }}</p>
+                </div>
+              {% endfor %}
+              {% if not issue_rows %}
+                <p>No rejected expenses in this view.</p>
+              {% endif %}
+            </div>
+          </article>
+
+          <article class="panel">
+            <div class="section-heading">
+              <h3>What This Demo Shows</h3>
+              <p>Business value for your presentation.</p>
+            </div>
+            <ul class="feature-list">
+              <li>CSV/XLSX upload handling</li>
+              <li>Date, amount, and approval validation</li>
+              <li>Employee, category, and monthly aggregation</li>
+              <li>Rejected and unusually large expense detection</li>
+              <li>Clean presentation-friendly dashboard</li>
+            </ul>
+          </article>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

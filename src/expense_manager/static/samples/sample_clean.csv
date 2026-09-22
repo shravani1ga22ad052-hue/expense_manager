@@ -1,0 +1,5 @@
+employee_id,date,category,amount,description,approval_status
+E101,2026-09-01,Travel,320.00,Hotel stay,approved
+E101,2026-09-02,Meals,48.50,Breakfast with client,approved
+E205,2026-09-03,Software,149.99,Subscription renewal,approved
+E314,2026-09-04,Office,76.25,Printer paper,approved

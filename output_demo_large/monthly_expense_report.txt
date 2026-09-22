@@ -1,0 +1,47 @@
+Monthly Expense Report
+======================
+Valid expenses: 24
+Rejected expenses: 46
+Flagged large expenses: 0
+
+Employee Totals
+---------------
+E101: $62.00
+E102: $99.00
+E111: $432.00
+E113: $506.00
+E117: $654.00
+E119: $728.00
+E122: $839.00
+E123: $876.00
+E126: $87.00
+E129: $198.00
+E131: $272.00
+E134: $383.00
+E137: $494.00
+E138: $531.00
+E141: $642.00
+E143: $716.00
+E146: $827.00
+E147: $864.00
+E153: $186.00
+E158: $371.00
+E159: $408.00
+E161: $482.00
+E162: $519.00
+E167: $704.00
+
+Category Totals
+---------------
+Meals: $2,804.00
+Office: $4,173.00
+Software: $3,186.00
+Training: $1,717.00
+
+Monthly Totals
+--------------
+2026-09: $11,880.00
+
+Large Expenses
+--------------
+No large expenses exceeded the threshold.

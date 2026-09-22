@@ -1,0 +1,5 @@
+employee_id,date,category,amount,description,approval_status
+E701,2026-09-11,Travel,1250.00,Client site visit,approved
+E702,2026-09-12,Equipment,980.00,Laptop accessories,approved
+E703,2026-09-13,Consulting,2400.00,External consultant fee,approved
+E704,2026-09-14,Meals,68.75,Team dinner,approved

@@ -1,0 +1,8 @@
+employee_id,date,category,amount,description,approval_status,source_row
+E501,2026-09-01,Travel,120.00,Client commute,approved,2
+E502,2026-09-02,Meals,45.50,Team lunch,approved,3
+E503,2026-09-03,Office,78.25,Stationery,approved,4
+E504,2026-09-04,Software,199.99,License renewal,approved,5
+E507,2026-09-07,Meals,62.10,Client dinner,approved,8
+E509,2026-09-09,Software,250.00,Monthly tool subscription,approved,10
+E510,2026-09-10,Training,85.00,Presentation practice,approved,11

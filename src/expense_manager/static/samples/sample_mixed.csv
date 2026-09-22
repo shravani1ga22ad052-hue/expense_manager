@@ -1,0 +1,6 @@
+employee_id,date,category,amount,description,approval_status
+E210,2026-09-05,Travel,860.00,Train tickets,approved
+E210,2026-09-06,Meals,34.20,Team lunch,approved
+E411,invalid-date,Office,55.00,Office supplies,approved
+E512,2026-09-08,Training,180.00,Course registration,rejected
+E512,2026-09-09,Training,-15.00,Refund adjustment,approved

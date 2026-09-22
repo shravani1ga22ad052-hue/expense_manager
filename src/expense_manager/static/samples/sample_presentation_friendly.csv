@@ -1,0 +1,11 @@
+employee_id,date,category,amount,description,approval_status
+E501,2026-09-01,Travel,120.00,Client commute,approved
+E502,2026-09-02,Meals,45.50,Team lunch,approved
+E503,2026-09-03,Office,78.25,Stationery,approved
+E504,2026-09-04,Software,199.99,License renewal,approved
+E505,invalid-date,Training,50.00,Workshop fee,approved
+E506,2026-09-06,Travel,-25.00,Taxi refund,approved
+E507,2026-09-07,Meals,62.10,Client dinner,approved
+E508,2026-09-08,Office,39.00,Printer paper,rejected
+E509,2026-09-09,Software,250.00,Monthly tool subscription,approved
+E510,2026-09-10,Training,85.00,Presentation practice,approved

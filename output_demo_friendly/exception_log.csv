@@ -1,0 +1,4 @@
+source_row,employee_id,reason,raw_values
+6,E505,"Date must be in a valid format (for example, 2026-09-22)","{'employee_id': 'E505', 'date': 'invalid-date', 'category': 'Training', 'amount': 50.0, 'description': 'Workshop fee', 'approval_status': 'approved'}"
+7,E506,Amount must be greater than 0,"{'employee_id': 'E506', 'date': '2026-09-06', 'category': 'Travel', 'amount': -25.0, 'description': 'Taxi refund', 'approval_status': 'approved'}"
+9,E508,Expense rejected by approval status: rejected,"{'employee_id': 'E508', 'date': '2026-09-08', 'category': 'Office', 'amount': 39.0, 'description': 'Printer paper', 'approval_status': 'rejected'}"

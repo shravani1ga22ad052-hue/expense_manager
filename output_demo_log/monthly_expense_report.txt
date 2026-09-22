@@ -1,0 +1,21 @@
+Monthly Expense Report
+======================
+Valid expenses: 0
+Rejected expenses: 80
+Flagged large expenses: 0
+
+Employee Totals
+---------------
+No valid employee totals available.
+
+Category Totals
+---------------
+No valid category totals available.
+
+Monthly Totals
+--------------
+No valid monthly totals available.
+
+Large Expenses
+--------------
+No large expenses exceeded the threshold.
